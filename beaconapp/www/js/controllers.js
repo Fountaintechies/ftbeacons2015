@@ -45,7 +45,15 @@ angular.module('starter.controllers', [])
   ];
 })
 
-.controller('RangingCtrl', function($scope, Beacons) {
-  $scope.beaconName = Beacons.getBeaconName();
+.controller('BeaconsCtrl', function($scope, $stateParams) {
+
+  // $scope.beaconProperties = [];
+
+  // for (var property in $scope.beacon) {
+  //     if ($scope.beacon.hasOwnProperty(property)) {
+  //         $scope.beaconProperties.push({name: property, value: $scope.beacon[property]});
+  //     }
+  // }
+  
 });
 
