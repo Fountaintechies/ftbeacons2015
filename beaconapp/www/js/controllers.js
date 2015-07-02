@@ -1,7 +1,14 @@
-
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, API) {
+ 
+  // With the new view caching in Ionic, Controllers are only called
+  // when they are recreated or on app start, instead of every page change.
+  // To listen for when this page is active (for example, to refresh data),
+  // listen for the $ionicView.enter event:
+  //$scope.$on('$ionicView.enter', function(e) {
+  //});
+  
   // Form data for the login modal
   $scope.loginData = {};
 
@@ -9,17 +16,33 @@ angular.module('starter.controllers', [])
   $ionicModal.fromTemplateUrl('templates/login.html', {
     scope: $scope
   }).then(function(modal) {
-    $scope.modal = modal;
+    $scope.modalLogin = modal;
+  });
+
+  // Create the signup modal that we will use later
+  $ionicModal.fromTemplateUrl('templates/signup.html', {
+    scope: $scope
+  }).then(function(modal) {
+    $scope.modalSignup = modal;
   });
 
   // Triggered in the login modal to close it
   $scope.closeLogin = function() {
-    $scope.modal.hide();
+    $scope.modalLogin.hide();
   };
 
   // Open the login modal
   $scope.login = function() {
-    $scope.modal.show();
+    $scope.modalLogin.show();
+  };
+
+  $scope.closeSignup = function() {
+    $scope.modalSignup.hide();
+  };
+
+  // Open the login modal
+  $scope.signup = function() {
+    $scope.modalSignup.show();
   };
 
   // Perform the login action when the user submits the login form
@@ -32,6 +55,41 @@ angular.module('starter.controllers', [])
       $scope.closeLogin();
     }, 1000);
   };
+
+  // Create a new controller method for creating new profiles
+  $scope.doSignup = function() {
+    // Use the form fields to create a new profile $resource object
+      var profile = new API({
+          firstName: this.firstName,
+          lastName: this.lastName,
+          email: this.email
+      });
+
+      console.log('PROFILE SIGNUP');
+      // Use the profile '$save' method to send an appropriate POST request
+      profile.$signup(function(response) {
+        // If an profile was created successfully, redirect the user to the profile's page 
+          // $location.path('profiles/' + response._id);
+          console.log('SUCCESS');
+          console.log(response);
+      }, function(errorResponse) {
+          console.log('ERROR');
+          console.log(errorResponse);
+        // Otherwise, present the user with the error message
+          $scope.error = errorResponse;
+      });
+  };
+
+})
+
+.controller('BeaconCtrl', function($scope,$rootScope) {
+
+  // $scope.$watch(function() {return $rootScope.second;},
+  //   function() {$scope.ticker = $rootScope.second;});
+
+//EVO CODE START
+//EVO CODE END
+
 })
 
 .controller('PlaylistsCtrl', function($scope) {
@@ -45,15 +103,5 @@ angular.module('starter.controllers', [])
   ];
 })
 
-.controller('BeaconsCtrl', function($scope, $stateParams) {
-
-  // $scope.beaconProperties = [];
-
-  // for (var property in $scope.beacon) {
-  //     if ($scope.beacon.hasOwnProperty(property)) {
-  //         $scope.beaconProperties.push({name: property, value: $scope.beacon[property]});
-  //     }
-  // }
-  
+.controller('PlaylistCtrl', function($scope, $stateParams) {
 });
-

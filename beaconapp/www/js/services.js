@@ -1,15 +1,38 @@
-angular.module('starter.services', [])
+// Invoke 'strict' JavaScript mode
+'use strict';
 
-.service('Beacons', function() {
+// Create the 'starter.APIs' service
+angular.module('starter.APIs',[])
 
-  this.setBeaconName = function (name) {
-    var beaconName = name;
-    return true;
-  };
+.factory('API', function($resource) {
+	// Use the '$resource' service to return an API '$resource' object
+    
+    var headers = {
+        'Access-Control-Allow-Origin' : '*',
+        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+        'Access-Control-Allow-Methods': 'OPTIONS, GET,PUT,POST,DELETE',
+        'Accept': 'application/json'
+    };
 
-  this.getBeaconName = function () {
-    var beaconName = beaconName || 'not yet defined';
-    return beaconName;
-  };
-  
+    //path for the API's
+    var path = {
+    	local: 'http://localhost:3000/api/mobile',
+        mobile: 'http://192.168.1.1:3000/api/mobile',
+    	server:'http://dev.fountaintechies.com/'
+    };
+    	
+    path.active = path.mobile;
+
+    //specify all API routes and requests here
+    return $resource(path.active+'/', {}, {
+        signup: {
+            method: 'POST',
+            // headers: headers,
+            url: path.active+'/signup'
+        },
+        enter: {
+            method: 'POST',
+            url: path.active+'/regionEvent'
+        }
+    });
 });
