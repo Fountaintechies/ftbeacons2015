@@ -1,4 +1,4 @@
-var app = (function()
+/*var app = (function()
 {
   // Application object.
   var app = {};
@@ -27,34 +27,43 @@ var app = (function()
     document.addEventListener(
       'deviceready',
       function() {  
-                    evothings.scriptsLoaded(onDeviceReady) },
+                    window.locationManager = cordova.plugins.locationManager;
+    
+                    // Start tracking beacons!
+                    startScan();
+
+                    // Display refresh timer.
+                    updateTimer = setInterval( function(){
+                      displayBeaconList();
+                      //alert( JSON.stringify( beacons) );
+                      
+
+                    }, 2000);
+                    //evothings.scriptsLoaded(onDeviceReady)
+                     },
       false);
   };
 
   function onDeviceReady()
   {
-    alert( cordova.plugins.locationManager );
-    // Specify a shortcut for the location manager holding the iBeacon functions.
-    window.locationManager = cordova.plugins.locationManager;
     
-    // Start tracking beacons!
-    startScan();
-
-    // Display refresh timer.
-    updateTimer = setInterval(displayBeaconList, 500);
+    
+    // Specify a shortcut for the location manager holding the iBeacon functions.
+    
   }
 
   function startScan()
   {
     // The delegate object holds the iBeacon callback functions
     // specified below.
-    alert( 'scan started ');
+    
     var delegate = new locationManager.Delegate();
-
+    
     // Called continuously when ranging beacons.
     delegate.didRangeBeaconsInRegion = function(pluginResult)
     {
-      //console.log('didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult))
+      console.log('didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult))
+      alert( 'didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult) );
       for (var i in pluginResult.beacons)
       {
         // Insert beacon into table of found beacons.
@@ -108,11 +117,13 @@ var app = (function()
 
   function displayBeaconList()
   {
+    
+    alert( beacon );
     // Clear beacon list.
     $('#found-beacons').empty();
 
     var timeNow = Date.now();
-
+    
     // Update beacon list.
     $.each(beacons, function(key, beacon)
     {
@@ -141,6 +152,7 @@ var app = (function()
         $('#found-beacons').append(element);
       }
     });
+    
   }
 
   return app;
@@ -149,15 +161,49 @@ var app = (function()
 app.initialize();
 
 
-
+*/
 
 angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope) {
+  
+  
+  ionic.Platform.ready(function(){
+    // will execute when device is ready, or immediately if the device is already ready.
+    alert( beacon );
+  });
+
+  $scope.goscan = function()
+  {
+    var regions =
+    [
+      // Estimote Beacon factory UUID.
+      {uuid:'f7826da6-4fa2-4e98-8024-bc5b71e0893e'},
+      // Sample UUIDs for beacons in our lab.
+      /*{uuid:'F7826DA6-4FA2-4E98-8024-BC5B71E0893E'},
+      {uuid:'8DEEFBB9-F738-4297-8040-96668BB44281'},
+      {uuid:'A0B13730-3A9A-11E3-AA6E-0800200C9A66'},
+      {uuid:'E20A39F4-73F5-4BC4-A12F-17D1AD07A961'},
+      {uuid:'A4950001-C5B1-4B44-B512-1370F02D74DE'}*/
+    ];
+    var beacons = {};
+    var updateTimer = null;
+
+    window.locationManager = cordova.plugins.locationManager;  
+    var delegate = new locationManager.Delegate();
+  //  alert( JSON.stringify(delegate) );
+    delegate.didRangeBeaconsInRegion = function(pluginResult) {
+      alert('didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult))
+    };
+    // Set the delegate object to use.
+    locationManager.setDelegate(delegate);  
+
+  }
+    
 
   $scope.resetTest = function()
   {
-    alert(evothings );
+    
     testLog('Resetting...');
     window.location.reload(true);
   }
