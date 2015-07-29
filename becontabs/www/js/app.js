@@ -20,17 +20,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       // org.apache.cordova.statusbar required
       StatusBar.styleLightContent();
     }
-
-    // beacon code 
-    if( cordova.plugins.locationManager ){
-      
-      
-
-
-    } else {
-      alert('cordova.plugins.locationManager not found');
-    }
-    
     
   });
 })

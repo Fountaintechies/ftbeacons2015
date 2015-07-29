@@ -167,7 +167,7 @@ angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope, $rootScope) {
   
-  
+
   ionic.Platform.ready(function(){
     // will execute when device is ready, or immediately if the device is already ready.
     //alert( 'in dash ctrl beacon' );
@@ -241,15 +241,8 @@ angular.module('starter.controllers', [])
   
   $scope.startranging = function(){
     var logToDom = function (message) {
-          var e = document.createElement('label');
-          e.innerText = message;
-
-          var br = document.createElement('br');
-          var br2 = document.createElement('br');
           var node = document.getElementById("found-beacons");
-          node.appendChild(e);
-          node.appendChild(br);
-          node.appendChild(br2);          
+          node.innerHTML = message ;          
       };
 
     var delegate = new cordova.plugins.locationManager.Delegate();
@@ -267,21 +260,22 @@ angular.module('starter.controllers', [])
     };
 
     delegate.didRangeBeaconsInRegion = function (pluginResult) {
+        console.log( pluginResult );
         logToDom('[DOM] didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));
     };
 
 
 
     var uuid = 'f7826da6-4fa2-4e98-8024-bc5b71e0893e';
-    var identifier = 'beaconOnTheMacBooksShelf';
+    var identifier = 'Singapore';
     var minor = 53710;
     var major = 43612;
     var beaconRegion = new cordova.plugins.locationManager.BeaconRegion(identifier, uuid, major, minor);
 
     var uuid = 'f7826da6-4fa2-4e98-8024-bc5b71e0893e';
     var identifier = 'PUNEINDIA';
-    var minor = 007;
-    var major = 999;
+    var minor = 2239;
+    var major = 50633;
     var beaconRegion2 = new cordova.plugins.locationManager.BeaconRegion(identifier, uuid, major, minor);
 
     cordova.plugins.locationManager.setDelegate(delegate);
