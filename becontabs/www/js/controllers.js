@@ -216,7 +216,8 @@ angular.module('starter.controllers', [])
 
     delegate.didRangeBeaconsInRegion = function (pluginResult) {
         if ( pluginResult.beacons.length > 0 ) {
-          logToDom('[DOM] didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));        
+          //logToDom('[DOM] didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));        
+          logToDom('[DOM] didRangeBeaconsInRegion: ' + pluginResult.region.identifier +' is'+ pluginResult.beacons[].proximity );        
         }
     };
 
@@ -235,12 +236,12 @@ angular.module('starter.controllers', [])
                             major: 50633,
                             minor: 2239
                           },
-                          {
+                          /*{
                             id: 'India',
                             uuid:'f7826da6-4fa2-4e98-8024-bc5b71e0893e',
                             major: 63253,
                             minor: 57994
-                          }
+                          }*/
                         ];
 
     cordova.plugins.locationManager.setDelegate(delegate);
@@ -253,11 +254,12 @@ angular.module('starter.controllers', [])
     for (var f in beaconRegions)
     {
       var region = beaconRegions[f];
-      var beaconRegion = new cordova.plugins.locationManager.BeaconRegion( region.id, region[f].uuid, region.major, region.minor);
+      
+      var beaconRegion = new cordova.plugins.locationManager.BeaconRegion( region.id, region.uuid, region.major, region.minor);
       
       // Start ranging.
       cordova.plugins.locationManager.startRangingBeaconsInRegion(beaconRegion)
-      .fail(console.error)
+      .fail(alert(console.error) )
       .done();      
 
     }
