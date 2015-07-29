@@ -175,8 +175,8 @@ angular.module('starter.controllers', [])
   $scope.stopmonitoring = function(){
     var uuid = 'f7826da6-4fa2-4e98-8024-bc5b71e0893e';
     var identifier = 'beaconOnTheMacBooksShelf';
-    var minor = 1000;
-    var major = 5;
+    var minor = 53710;
+    var major = 43612;
     var beaconRegion = new cordova.plugins.locationManager.BeaconRegion(identifier, uuid, major, minor);
 
     cordova.plugins.locationManager.stopMonitoringForRegion(beaconRegion)
@@ -224,8 +224,8 @@ angular.module('starter.controllers', [])
 
       var uuid = 'f7826da6-4fa2-4e98-8024-bc5b71e0893e';
       var identifier = 'beaconOnTheMacBooksShelf';
-      var minor = 1000;
-      var major = 5;
+      var minor = 53710;
+      var major = 43612;
       var beaconRegion = new cordova.plugins.locationManager.BeaconRegion(identifier, uuid, major, minor);
 
       cordova.plugins.locationManager.setDelegate(delegate);
@@ -274,8 +274,8 @@ angular.module('starter.controllers', [])
 
     var uuid = 'f7826da6-4fa2-4e98-8024-bc5b71e0893e';
     var identifier = 'beaconOnTheMacBooksShelf';
-    var minor = 1000;
-    var major = 5;
+    var minor = 53710;
+    var major = 43612;
     var beaconRegion = new cordova.plugins.locationManager.BeaconRegion(identifier, uuid, major, minor);
 
     cordova.plugins.locationManager.setDelegate(delegate);
