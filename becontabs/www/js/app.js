@@ -24,29 +24,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     // beacon code 
     if( cordova.plugins.locationManager ){
       
-      var app = {};
-      var regions =
-      [
-        // Estimote Beacon factory UUID.
-        {uuid:'f7826da6-4fa2-4e98-8024-bc5b71e0893e'},
-        // Sample UUIDs for beacons in our lab.
-        /*{uuid:'F7826DA6-4FA2-4E98-8024-BC5B71E0893E'},
-        {uuid:'8DEEFBB9-F738-4297-8040-96668BB44281'},
-        {uuid:'A0B13730-3A9A-11E3-AA6E-0800200C9A66'},
-        {uuid:'E20A39F4-73F5-4BC4-A12F-17D1AD07A961'},
-        {uuid:'A4950001-C5B1-4B44-B512-1370F02D74DE'}*/
-      ];
-      var beacons = {};
-      var updateTimer = null;
-
-      window.locationManager = cordova.plugins.locationManager;  
-      var delegate = new locationManager.Delegate();
-    //  alert( JSON.stringify(delegate) );
-      delegate.didRangeBeaconsInRegion = function(pluginResult) {
-        alert('didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult))
-      };
-      // Set the delegate object to use.
-      locationManager.setDelegate(delegate);  
+      
 
 
     } else {

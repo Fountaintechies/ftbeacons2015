@@ -165,17 +165,64 @@ app.initialize();
 
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope) {
+.controller('DashCtrl', function($scope, $rootScope) {
   
   
   ionic.Platform.ready(function(){
     // will execute when device is ready, or immediately if the device is already ready.
-    alert( beacon );
+    //alert( 'in dash ctrl beacon' );
   });
 
-  $scope.goscan = function()
+  $scope.goprint = function()
   {
-      
+      var logToDom = function (message) {
+          var e = document.createElement('label');
+          e.innerText = message;
+
+          var br = document.createElement('br');
+          var br2 = document.createElement('br');
+          document.body.appendChild(e);
+          document.body.appendChild(br);
+          document.body.appendChild(br2);
+
+          window.scrollTo(0, window.document.height);
+      };
+
+      var delegate = new cordova.plugins.locationManager.Delegate();
+
+      delegate.didDetermineStateForRegion = function (pluginResult) {
+
+          //logToDom('[DOM] didDetermineStateForRegion: ' + JSON.stringify(pluginResult));
+
+          cordova.plugins.locationManager.appendToDeviceLog('[DOM] didDetermineStateForRegion: '
+              + JSON.stringify(pluginResult));
+      };
+
+      delegate.didStartMonitoringForRegion = function (pluginResult) {
+          console.log('didStartMonitoringForRegion:', pluginResult);
+
+          //logToDom('didStartMonitoringForRegion:' + JSON.stringify(pluginResult));
+      };
+
+      delegate.didRangeBeaconsInRegion = function (pluginResult) {
+          //logToDom('[DOM] didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));
+      };
+
+      var uuid = 'f7826da6-4fa2-4e98-8024-bc5b71e0893e';
+      var identifier = 'beaconOnTheMacBooksShelf';
+      var minor = 1000;
+      var major = 5;
+      var beaconRegion = new cordova.plugins.locationManager.BeaconRegion(identifier, uuid, major, minor);
+
+      cordova.plugins.locationManager.setDelegate(delegate);
+
+      // required in iOS 8+
+      cordova.plugins.locationManager.requestWhenInUseAuthorization(); 
+      // or cordova.plugins.locationManager.requestAlwaysAuthorization()
+
+      cordova.plugins.locationManager.startMonitoringForRegion(beaconRegion)
+          .fail(console.error)
+          .done();
   }
     
 
