@@ -278,6 +278,12 @@ angular.module('starter.controllers', [])
     var major = 43612;
     var beaconRegion = new cordova.plugins.locationManager.BeaconRegion(identifier, uuid, major, minor);
 
+    var uuid = 'f7826da6-4fa2-4e98-8024-bc5b71e0893e';
+    var identifier = 'PUNEINDIA';
+    var minor = 007;
+    var major = 999;
+    var beaconRegion2 = new cordova.plugins.locationManager.BeaconRegion(identifier, uuid, major, minor);
+
     cordova.plugins.locationManager.setDelegate(delegate);
 
     // required in iOS 8+
@@ -285,6 +291,10 @@ angular.module('starter.controllers', [])
     // or cordova.plugins.locationManager.requestAlwaysAuthorization()
 
     cordova.plugins.locationManager.startRangingBeaconsInRegion(beaconRegion)
+        .fail(console.error)
+        .done();
+
+    cordova.plugins.locationManager.startRangingBeaconsInRegion(beaconRegion2)
         .fail(console.error)
         .done();
 
