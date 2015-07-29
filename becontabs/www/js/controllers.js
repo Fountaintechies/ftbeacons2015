@@ -186,63 +186,18 @@ angular.module('starter.controllers', [])
   }
   $scope.startmonitoring = function()
   {
-     // $scope.device = '.............................';
-      var logToDom = function (message) {
-          var e = document.createElement('label');
-          e.innerText = message;
-
-          var br = document.createElement('br');
-          var br2 = document.createElement('br');
-          document.body.appendChild(e);
-          document.body.appendChild(br);
-          document.body.appendChild(br2);
-
-          window.scrollTo(0, window.document.height);
-      };
-
-      var delegate = new cordova.plugins.locationManager.Delegate();
-
-      delegate.didDetermineStateForRegion = function (pluginResult) {
-
-          //logToDom('[DOM] didDetermineStateForRegion: ' + JSON.stringify(pluginResult));
-
-          cordova.plugins.locationManager.appendToDeviceLog('[DOM] didDetermineStateForRegion: '
-              + JSON.stringify(pluginResult));
-          $scope.device = '[DOM] didDetermineStateForRegion: '+ JSON.stringify(pluginResult);
-      };
-
-      delegate.didStartMonitoringForRegion = function (pluginResult) {
-          console.log('didStartMonitoringForRegion:', pluginResult);
-          $scope.device = JSON.stringify(pluginResult);
-          //logToDom('didStartMonitoringForRegion:' + JSON.stringify(pluginResult));
-      };
-
-      delegate.didRangeBeaconsInRegion = function (pluginResult) {
-          //logToDom('[DOM] didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));
-          $scope.device = 'didRangeBeaconsInRegion' + JSON.stringify(pluginResult);
-      };
-
-      var uuid = 'f7826da6-4fa2-4e98-8024-bc5b71e0893e';
-      var identifier = 'beaconOnTheMacBooksShelf';
-      var minor = 53710;
-      var major = 43612;
-      var beaconRegion = new cordova.plugins.locationManager.BeaconRegion(identifier, uuid, major, minor);
-
-      cordova.plugins.locationManager.setDelegate(delegate);
-
-      // required in iOS 8+
-      cordova.plugins.locationManager.requestWhenInUseAuthorization(); 
-      // or cordova.plugins.locationManager.requestAlwaysAuthorization()
-
-      cordova.plugins.locationManager.startMonitoringForRegion(beaconRegion)
-          .fail(console.error)
-          .done();
+     
   }
   
   $scope.startranging = function(){
-    var logToDom = function (message) {
+
+      var logToDom = function (message) {
+          var e = document.createElement('label');
+          e.innerText = message;
           var node = document.getElementById("found-beacons");
-          node.innerHTML = message ;          
+          var br2 = document.createElement('br');
+          node.appendChild(e);
+          node.appendChild(br2);
       };
 
     var delegate = new cordova.plugins.locationManager.Delegate();
@@ -260,23 +215,33 @@ angular.module('starter.controllers', [])
     };
 
     delegate.didRangeBeaconsInRegion = function (pluginResult) {
-        console.log( pluginResult );
-        logToDom('[DOM] didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));
+        if ( pluginResult.beacons.length > 0 ) {
+          logToDom('[DOM] didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));        
+        }
     };
 
 
 
-    var uuid = 'f7826da6-4fa2-4e98-8024-bc5b71e0893e';
-    var identifier = 'Singapore';
-    var minor = 53710;
-    var major = 43612;
-    var beaconRegion = new cordova.plugins.locationManager.BeaconRegion(identifier, uuid, major, minor);
-
-    var uuid = 'f7826da6-4fa2-4e98-8024-bc5b71e0893e';
-    var identifier = 'PUNEINDIA';
-    var minor = 2239;
-    var major = 50633;
-    var beaconRegion2 = new cordova.plugins.locationManager.BeaconRegion(identifier, uuid, major, minor);
+    var beaconRegions = [
+                          {
+                            id: 'Singapre',
+                            uuid:'f7826da6-4fa2-4e98-8024-bc5b71e0893e',
+                            major: 43612,
+                            minor: 53710
+                          },
+                          {
+                            id: 'Swiss',
+                            uuid:'f7826da6-4fa2-4e98-8024-bc5b71e0893e',
+                            major: 50633,
+                            minor: 2239
+                          },
+                          {
+                            id: 'India',
+                            uuid:'f7826da6-4fa2-4e98-8024-bc5b71e0893e',
+                            major: 63253,
+                            minor: 57994
+                          }
+                        ];
 
     cordova.plugins.locationManager.setDelegate(delegate);
 
@@ -284,13 +249,19 @@ angular.module('starter.controllers', [])
     cordova.plugins.locationManager.requestWhenInUseAuthorization(); 
     // or cordova.plugins.locationManager.requestAlwaysAuthorization()
 
-    cordova.plugins.locationManager.startRangingBeaconsInRegion(beaconRegion)
-        .fail(console.error)
-        .done();
+    // Start monitoring and ranging beacons.
+    for (var f in beaconRegions)
+    {
+      var region = beaconRegions[f];
+      var beaconRegion = new cordova.plugins.locationManager.BeaconRegion( region.id, region[f].uuid, region.major, region.minor);
+      
+      // Start ranging.
+      cordova.plugins.locationManager.startRangingBeaconsInRegion(beaconRegion)
+      .fail(console.error)
+      .done();      
 
-    cordova.plugins.locationManager.startRangingBeaconsInRegion(beaconRegion2)
-        .fail(console.error)
-        .done();
+    }
+
 
   }  
 
