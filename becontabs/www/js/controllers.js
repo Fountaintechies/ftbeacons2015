@@ -75,6 +75,12 @@ angular.module('starter.controllers', [])
                             major: 50633,
                             minor: 2239
                           },
+                          {
+                            id: 'China1',
+                            uuid:'FDA50693-A4E2-4FB1-AFCF-C6EB07647825',
+                            major: 10001,
+                            minor: 12544
+                          },
                           /*{
                             id: 'India',
                             uuid:'f7826da6-4fa2-4e98-8024-bc5b71e0893e',
