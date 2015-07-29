@@ -265,12 +265,7 @@ angular.module('starter.controllers', [])
 
   }  
 
-  $scope.resetTest = function()
-  {
-    
-    testLog('Resetting...');
-    window.location.reload(true);
-  }
+  
 
 })
 
