@@ -200,7 +200,7 @@ angular.module('starter.controllers', [])
 
       delegate.didStartMonitoringForRegion = function (pluginResult) {
           console.log('didStartMonitoringForRegion:', pluginResult);
-
+          $scope.device = JSON.stringify(pluginResult);
           //logToDom('didStartMonitoringForRegion:' + JSON.stringify(pluginResult));
       };
 
