@@ -189,6 +189,10 @@ angular.module('starter.controllers', [])
      
   }
   
+  $scope.clear = function(){
+    document.getElementById("found-beacons").innerHTML = '';
+  }
+  
   $scope.startranging = function(){
 
       var logToDom = function (message) {
@@ -217,7 +221,7 @@ angular.module('starter.controllers', [])
     delegate.didRangeBeaconsInRegion = function (pluginResult) {
         if ( pluginResult.beacons.length > 0 ) {
           //logToDom('[DOM] didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));        
-          logToDom('[DOM] didRangeBeaconsInRegion: ' + pluginResult.region.identifier +' is'+ pluginResult.beacons[].proximity );        
+          logToDom('[DOM] didRangeBeaconsInRegion: ' + pluginResult.region.identifier +' is '+pluginResult.beacons[0].proximity );        
         }
     };
 
@@ -259,7 +263,7 @@ angular.module('starter.controllers', [])
       
       // Start ranging.
       cordova.plugins.locationManager.startRangingBeaconsInRegion(beaconRegion)
-      .fail(alert(console.error) )
+      .fail(console.error) 
       .done();      
 
     }
