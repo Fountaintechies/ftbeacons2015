@@ -15,9 +15,17 @@
     "shelljs": "^0.3.0"
   },
   "cordovaPlugins": [
-    "com.evothings.ble"
+    "com.evothings.ble",
+    "com.unarin.cordova.beacon",
+    "org.apache.cordova.device"
   ],
   "cordovaPlatforms": [
-    "android"
+    "android",
+    "ios",
+    {
+      "platform": "ios",
+      "version": "",
+      "locator": "ios"
+    }
   ]
 }

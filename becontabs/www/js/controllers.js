@@ -1,4 +1,4 @@
-/*var app = (function()
+var app = (function()
 {
   // Application object.
   var app = {};
@@ -161,7 +161,7 @@
 app.initialize();
 
 
-*/
+
 
 angular.module('starter.controllers', [])
 
